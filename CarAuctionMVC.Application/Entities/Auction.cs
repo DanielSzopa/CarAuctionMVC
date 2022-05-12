@@ -7,5 +7,6 @@ namespace CarAuctionMVC.Application.Entities
         public string? AuctionTittle { get; set; }
         public DateTime? AuctionDate { get; set; }
         public double Price { get; set; }
+        public Car? Car { get; set; }
     }
 }
