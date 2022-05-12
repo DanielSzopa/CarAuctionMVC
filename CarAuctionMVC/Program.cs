@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CarAuctionMVCDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), a => a.MigrationsAssembly("CarAuctionMVC.Application")));
 
 var app = builder.Build();
 
