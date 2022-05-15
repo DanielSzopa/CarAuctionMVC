@@ -47,6 +47,24 @@ namespace CarAuctionMVC.Application.Services
             return model;
         }
 
+        public async Task DeleteAuction(int id)
+        {
+            try
+            {
+                var auction = await _dbContext.Auctions.FirstOrDefaultAsync(a => a.Id == id);
+                if (auction != null)
+                {
+                   _dbContext.Auctions.Remove(auction);
+                   await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         private Auction MapNewAuctionDtoToAuctionEntity(NewAuctionDto newAuctionDto)
         {
             var auction = new Auction()

@@ -7,4 +7,5 @@ public interface IAuctionService
     Task<ListOfAuctionDto> GetListOfAuctions();
     Task CreateNewAuction(NewAuctionDto auctionDto);
     Task<NewAuctionDto> GetNewAuctionDtoBeforeCreate();
+    Task DeleteAuction(int id);
 }

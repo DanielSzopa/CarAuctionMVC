@@ -34,5 +34,11 @@ namespace CarAuctionMVC.Controllers
             await _auctionService.CreateNewAuction(auctionDto);
             return await Task.Run(() => RedirectToAction("Index"));
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _auctionService.DeleteAuction(id);
+            return await Task.Run(() => RedirectToAction("Index"));
+        }
     }
 }
