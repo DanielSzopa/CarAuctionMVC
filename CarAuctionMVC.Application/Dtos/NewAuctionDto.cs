@@ -4,6 +4,7 @@ namespace CarAuctionMVC.Application.Dtos
 {
     public class NewAuctionDto
     {
+        public int Id { get; set; }
         public string? AuctionTittle { get; set; }
         public DateTime? AuctionDate { get; set; }
         public double Price { get; set; }

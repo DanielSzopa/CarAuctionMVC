@@ -15,6 +15,7 @@ namespace CarAuctionMVC.Controllers
             _auctionService = auctionService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var auctions = await _auctionService.GetListOfAuctions();
@@ -35,10 +36,32 @@ namespace CarAuctionMVC.Controllers
             return await Task.Run(() => RedirectToAction("Index"));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await _auctionService.GetNewAuctionDtoDtoForEdit(id);
+            return await Task.Run(() => View(model));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(NewAuctionDto auctionDto)
+        {
+            await _auctionService.EditAuction(auctionDto);
+            return await Task.Run(() => RedirectToAction("Index"));
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             await _auctionService.DeleteAuction(id);
             return await Task.Run(() => RedirectToAction("Index"));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var auctionDetails = await _auctionService.GetAuctionDetailsById(id);
+            return await Task.Run(() => View(auctionDetails));
         }
     }
 }

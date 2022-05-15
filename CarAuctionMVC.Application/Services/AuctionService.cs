@@ -21,12 +21,118 @@ namespace CarAuctionMVC.Application.Services
             return listOfAuctions;
         }
 
+        public async Task<NewAuctionDto> GetNewAuctionDtoDtoForEdit(int id)
+        {
+            try
+            {
+                var newAuctionDto = await _dbContext.Auctions
+                    .Include(a => a.Car)
+                    .Where(a => a.Id == id)
+                    .Select(a => new NewAuctionDto()
+                    {
+                        Id = a.Id,
+                        AuctionTittle = a.AuctionTittle,
+                        AuctionDate = a.AuctionDate,
+                        Price = a.Price,
+                        Model = a.Car.Model,
+                        Brand = a.Car.Brand,
+                        CountryOfOrigin = a.Car.CountryOfOrigin,
+                        DateOfProduction = a.Car.DateOfProduction,
+                        Mileage = a.Car.Mileage,
+                        Color = a.Car.Color,
+                        CarBodyId = a.Car.CarBodyId,
+                        CategoryId = a.Car.CategoryId,
+                        EngineTypeId = a.Car.EngineTypeId
+                    }).FirstOrDefaultAsync();
+
+                newAuctionDto.CarBodies = await GetCarBodies();
+                newAuctionDto.Categories = await GetCategories();
+                newAuctionDto.Engines = await GetEngines();
+
+                return newAuctionDto;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<AuctionDetailsDto> GetAuctionDetailsById(int id)
+        {
+            try
+            {
+                var auctionDetails = await _dbContext.Auctions
+                    .Include(a => a.Car)
+                    .ThenInclude(c => c.CarBody)
+                    .Include(a => a.Car)
+                    .ThenInclude(c => c.EngineType)
+                    .Include(a => a.Car)
+                    .ThenInclude(c => c.Category)
+                    .Where(a => a.Id == id)
+                    .Select(a => new AuctionDetailsDto()
+                    {
+                        AuctionTittle = a.AuctionTittle,
+                        AuctionDate = a.AuctionDate,
+                        Price = a.Price,
+                        Model = a.Car.Model,
+                        Brand = a.Car.Brand,
+                        CountryOfOrigin = a.Car.CountryOfOrigin,
+                        DateOfProduction = a.Car.DateOfProduction.Value.Year.ToString(),
+                        Mileage = a.Car.Mileage,
+                        Color = a.Car.Color,
+                        NameOfCarBody = a.Car.CarBody.NameOfCarBody,
+                        CategoryName = a.Car.Category.CategoryName,
+                        EngineName = a.Car.EngineType.EngineName
+                    }).FirstOrDefaultAsync();
+
+                return auctionDetails;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         public async Task CreateNewAuction(NewAuctionDto auctionDto)
         {
             var auction = MapNewAuctionDtoToAuctionEntity(auctionDto);
             try
             {
                 await _dbContext.Auctions.AddAsync(auction);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task EditAuction(NewAuctionDto auctionDto)
+        {
+            try
+            {
+                var auction = await _dbContext.Auctions
+                    .Include(a => a.Car)
+                    .FirstOrDefaultAsync(a => a.Id == auctionDto.Id);
+
+                if (auction is null)
+                    throw new Exception("auction is null");
+
+                auction.AuctionTittle = auctionDto.AuctionTittle;
+                auction.Price = auctionDto.Price;
+                auction.Car.Model = auctionDto.Model;
+                auction.Car.Brand = auctionDto.Brand;
+                auction.Car.CountryOfOrigin = auctionDto.CountryOfOrigin;
+                auction.Car.DateOfProduction = auctionDto.DateOfProduction;
+                auction.Car.Mileage = auctionDto.Mileage;
+                auction.Car.Color = auctionDto.Color;
+                auction.Car.CarBodyId = auctionDto.CarBodyId;
+                auction.Car.CategoryId = auctionDto.CategoryId;
+                auction.Car.EngineTypeId = auctionDto.EngineTypeId;
+
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception e)
