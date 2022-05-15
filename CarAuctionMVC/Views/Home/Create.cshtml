@@ -1,0 +1,84 @@
+﻿@model CarAuctionMVC.Application.Dtos.NewAuctionDto
+
+@{
+    ViewData["Title"] = "Stwórz aukcję";
+}
+
+<h1>Nowa aukcja</h1>
+
+<h4>Wypełnij formularz aby dodać nową aukcję</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AuctionTittle" class="control-label">Tytuł</label>
+                <input asp-for="AuctionTittle" class="form-control" />
+                <span asp-validation-for="AuctionTittle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Brand" class="control-label">Marka</label>
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label">Model</label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineTypeId" class="control-label">Silnik</label>
+                <select asp-for="EngineTypeId" class="form-control" asp-items="@(new SelectList(Model.Engines,"Id", "EngineName"))"></select>
+                <span asp-validation-for="EngineTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarBodyId" class="control-label">Nadwozie</label>
+                <select asp-for="CarBodyId" class="form-control" asp-items="@(new SelectList(Model.CarBodies,"Id", "NameOfCarBody"))"></select>
+                <span asp-validation-for="CarBodyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">Kategoria</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(Model.Categories,"Id", "CategoryName"))"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryOfOrigin" class="control-label">Kraj pochodzenia</label>
+                <input asp-for="CountryOfOrigin" class="form-control" />
+                <span asp-validation-for="CountryOfOrigin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfProduction" class="control-label">Rok produkcji</label>
+                <input asp-for="DateOfProduction" class="form-control" />
+                <span asp-validation-for="DateOfProduction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mileage" class="control-label">Przebieg</label>
+                <input asp-for="Mileage" class="form-control" />
+                <span asp-validation-for="Mileage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color" class="control-label">Kolor</label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">Cena</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <br/>
+                <input type="submit" value="Stwórz" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Cofnij</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

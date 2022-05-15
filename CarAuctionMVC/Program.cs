@@ -1,16 +1,21 @@
 using CarAuctionMVC.Application.Context;
+using CarAuctionMVC.Application.Dtos;
 using CarAuctionMVC.Application.Seeders;
 using CarAuctionMVC.Application.Services;
+using CarAuctionMVC.Application.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation();
 builder.Services.AddDbContext<CarAuctionMVCDbContext>(options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), a => a.MigrationsAssembly("CarAuctionMVC.Application")));
 
 builder.Services.AddScoped<ICarAuctionSeeder, CarAuctionSeeder>();
-builder.Services.AddScoped<IAuctionService, AuctionService>();
+builder.Services.AddTransient<IAuctionService, AuctionService>();
+builder.Services.AddTransient<IValidator<NewAuctionDto>,NewAuctionDtoValidator>();
 
 var app = builder.Build();
 
