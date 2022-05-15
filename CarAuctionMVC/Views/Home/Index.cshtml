@@ -1,13 +1,13 @@
 ﻿@model CarAuctionMVC.Application.Dtos.ListOfAuctionDto
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Aukcje";
 }
 
-<h1>Index</h1>
+<h1>Aukcja samochodów</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Nowa aukcja</a>
 </p>
 <table class="table">
     <thead>
@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.Price) zł
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Usuń", "Delete", new { id = item.Id })
             </td>
         </tr>
 }
