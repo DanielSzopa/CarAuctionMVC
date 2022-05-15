@@ -1,5 +1,6 @@
 using CarAuctionMVC.Application.Context;
 using CarAuctionMVC.Application.Seeders;
+using CarAuctionMVC.Application.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddDbContext<CarAuctionMVCDbContext>(options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), a => a.MigrationsAssembly("CarAuctionMVC.Application")));
 
 builder.Services.AddScoped<ICarAuctionSeeder, CarAuctionSeeder>();
+builder.Services.AddScoped<IAuctionService, AuctionService>();
 
 var app = builder.Build();
 

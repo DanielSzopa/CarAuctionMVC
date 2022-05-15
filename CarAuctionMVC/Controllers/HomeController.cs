@@ -1,21 +1,23 @@
-﻿using CarAuctionMVC.Models;
+﻿using CarAuctionMVC.Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace CarAuctionMVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAuctionService _auctionService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAuctionService auctionService)
         {
             _logger = logger;
+            _auctionService = auctionService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var auctions = await _auctionService.GetListOfAuctionDto();
+            return await Task.Run(() => View(auctions));
         }
 
         public IActionResult Privacy()
@@ -23,10 +25,5 @@ namespace CarAuctionMVC.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
