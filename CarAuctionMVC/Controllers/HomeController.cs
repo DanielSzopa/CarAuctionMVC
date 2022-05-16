@@ -32,8 +32,8 @@ namespace CarAuctionMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(NewAuctionDto auctionDto)
         {
-            await _auctionService.CreateNewAuction(auctionDto);
-            return await Task.Run(() => RedirectToAction("Index"));
+            var auctionId = await _auctionService.CreateNewAuction(auctionDto);
+            return await Task.Run(() => RedirectToAction("Details", new{id = auctionId}));
         }
 
         [HttpGet]
@@ -46,8 +46,8 @@ namespace CarAuctionMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(NewAuctionDto auctionDto)
         {
-            await _auctionService.EditAuction(auctionDto);
-            return await Task.Run(() => RedirectToAction("Index"));
+            var auctionId =  await _auctionService.EditAuction(auctionDto);
+            return await Task.Run(() => RedirectToAction("Details", new { id = auctionId }));
         }
 
         [HttpGet]

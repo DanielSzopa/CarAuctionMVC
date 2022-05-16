@@ -2,6 +2,7 @@
 {
     public class AuctionDetailsDto
     {
+        public int Id { get; set; }
         public string? AuctionTittle { get; set; }
         public DateTime? AuctionDate { get; set; }
         public double Price { get; set; }

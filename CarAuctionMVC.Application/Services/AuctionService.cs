@@ -72,6 +72,7 @@ namespace CarAuctionMVC.Application.Services
                     .Where(a => a.Id == id)
                     .Select(a => new AuctionDetailsDto()
                     {
+                        Id = a.Id,
                         AuctionTittle = a.AuctionTittle,
                         AuctionDate = a.AuctionDate,
                         Price = a.Price,
@@ -95,13 +96,14 @@ namespace CarAuctionMVC.Application.Services
             }
         }
 
-        public async Task CreateNewAuction(NewAuctionDto auctionDto)
+        public async Task<int> CreateNewAuction(NewAuctionDto auctionDto)
         {
             var auction = MapNewAuctionDtoToAuctionEntity(auctionDto);
             try
             {
                 await _dbContext.Auctions.AddAsync(auction);
                 await _dbContext.SaveChangesAsync();
+                return auction.Id;
             }
             catch (Exception e)
             {
@@ -110,7 +112,7 @@ namespace CarAuctionMVC.Application.Services
             }
         }
 
-        public async Task EditAuction(NewAuctionDto auctionDto)
+        public async Task<int> EditAuction(NewAuctionDto auctionDto)
         {
             try
             {
@@ -134,6 +136,7 @@ namespace CarAuctionMVC.Application.Services
                 auction.Car.EngineTypeId = auctionDto.EngineTypeId;
 
                 await _dbContext.SaveChangesAsync();
+                return auction.Id;
             }
             catch (Exception e)
             {
