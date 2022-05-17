@@ -6,12 +6,10 @@ namespace CarAuctionMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IAuctionService _auctionService;
 
-        public HomeController(ILogger<HomeController> logger, IAuctionService auctionService)
+        public HomeController(IAuctionService auctionService)
         {
-            _logger = logger;
             _auctionService = auctionService;
         }
 

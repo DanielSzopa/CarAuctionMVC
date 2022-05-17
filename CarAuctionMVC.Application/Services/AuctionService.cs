@@ -2,16 +2,19 @@
 using CarAuctionMVC.Application.Dtos;
 using CarAuctionMVC.Application.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CarAuctionMVC.Application.Services
 {
     public class AuctionService : IAuctionService
     {
         private readonly CarAuctionMVCDbContext _dbContext;
+        private readonly ILogger<AuctionService> _logger;
 
-        public AuctionService(CarAuctionMVCDbContext dbContext)
+        public AuctionService(CarAuctionMVCDbContext dbContext, ILogger<AuctionService> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<ListOfAuctionDto> GetListOfAuctions()
@@ -19,43 +22,6 @@ namespace CarAuctionMVC.Application.Services
             var auctions = await GetAuctions();
             var listOfAuctions = new ListOfAuctionDto() { Auctions = auctions };
             return listOfAuctions;
-        }
-
-        public async Task<NewAuctionDto> GetNewAuctionDtoDtoForEdit(int id)
-        {
-            try
-            {
-                var newAuctionDto = await _dbContext.Auctions
-                    .Include(a => a.Car)
-                    .Where(a => a.Id == id)
-                    .Select(a => new NewAuctionDto()
-                    {
-                        Id = a.Id,
-                        AuctionTittle = a.AuctionTittle,
-                        AuctionDate = a.AuctionDate,
-                        Price = a.Price,
-                        Model = a.Car.Model,
-                        Brand = a.Car.Brand,
-                        CountryOfOrigin = a.Car.CountryOfOrigin,
-                        DateOfProduction = a.Car.DateOfProduction,
-                        Mileage = a.Car.Mileage,
-                        Color = a.Car.Color,
-                        CarBodyId = a.Car.CarBodyId,
-                        CategoryId = a.Car.CategoryId,
-                        EngineTypeId = a.Car.EngineTypeId
-                    }).FirstOrDefaultAsync();
-
-                newAuctionDto.CarBodies = await GetCarBodies();
-                newAuctionDto.Categories = await GetCategories();
-                newAuctionDto.Engines = await GetEngines();
-
-                return newAuctionDto;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
         }
 
         public async Task<AuctionDetailsDto> GetAuctionDetailsById(int id)
@@ -91,7 +57,55 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogInformation($"Problem with read auction details {e.ToString()}");
+                throw;
+            }
+        }
+
+        public async Task<NewAuctionDto> GetNewAuctionDtoBeforeCreate()
+        {
+            var model = new NewAuctionDto()
+            {
+                CarBodies = await GetCarBodies(),
+                Categories = await GetCategories(),
+                Engines = await GetEngines()
+            };
+            return model;
+        }
+
+        public async Task<NewAuctionDto> GetNewAuctionDtoDtoForEdit(int id)
+        {
+            try
+            {
+                var newAuctionDto = await _dbContext.Auctions
+                    .Include(a => a.Car)
+                    .Where(a => a.Id == id)
+                    .Select(a => new NewAuctionDto()
+                    {
+                        Id = a.Id,
+                        AuctionTittle = a.AuctionTittle,
+                        AuctionDate = a.AuctionDate,
+                        Price = a.Price,
+                        Model = a.Car.Model,
+                        Brand = a.Car.Brand,
+                        CountryOfOrigin = a.Car.CountryOfOrigin,
+                        DateOfProduction = a.Car.DateOfProduction,
+                        Mileage = a.Car.Mileage,
+                        Color = a.Car.Color,
+                        CarBodyId = a.Car.CarBodyId,
+                        CategoryId = a.Car.CategoryId,
+                        EngineTypeId = a.Car.EngineTypeId
+                    }).FirstOrDefaultAsync();
+
+                newAuctionDto.CarBodies = await GetCarBodies();
+                newAuctionDto.Categories = await GetCategories();
+                newAuctionDto.Engines = await GetEngines();
+
+                return newAuctionDto;
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"Problem with read auction details before create{e.ToString()}");
                 throw;
             }
         }
@@ -107,7 +121,7 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogInformation($"Problem with create new auction {e.ToString()}");
                 throw;
             }
         }
@@ -140,20 +154,9 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogInformation($"Problem with edit auction {e.ToString()}");
                 throw;
             }
-        }
-
-        public async Task<NewAuctionDto> GetNewAuctionDtoBeforeCreate()
-        {
-            var model = new NewAuctionDto()
-            {
-                CarBodies = await GetCarBodies(),
-                Categories = await GetCategories(),
-                Engines = await GetEngines()
-            };
-            return model;
         }
 
         public async Task DeleteAuction(int id)
@@ -169,7 +172,7 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogInformation($"Problem with delete auction id: {id} Exception: {e.ToString()}");
                 throw;
             }
         }
@@ -206,7 +209,7 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogInformation($"Problem with get car bodies {e.ToString()}");
                 throw;
             }
         }
@@ -220,7 +223,7 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogInformation($"Problem with get car categories {e.ToString()}");
                 throw;
             }
         }
@@ -234,7 +237,7 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogInformation($"Problem with get car engines {e.ToString()}");
                 throw;
             }
         }
@@ -258,7 +261,8 @@ namespace CarAuctionMVC.Application.Services
             }
             catch (Exception e)
             {
-                return new List<AuctionDto>();
+                _logger.LogInformation($"Problem with get auctions {e.ToString()}");
+                throw;
             }
         }
     }

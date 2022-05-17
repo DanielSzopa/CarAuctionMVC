@@ -6,8 +6,12 @@ using CarAuctionMVC.Application.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.SetMinimumLevel(LogLevel.Error);
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 builder.Services.AddControllersWithViews().AddFluentValidation();
 builder.Services.AddDbContext<CarAuctionMVCDbContext>(options => options
