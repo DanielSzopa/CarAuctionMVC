@@ -44,13 +44,6 @@ namespace CarAuctionMVC.Application.Seeders
                     await _dbContext.Auctions.AddRangeAsync(auctions);
                     await _dbContext.SaveChangesAsync();
                 }
-
-                if (!await _dbContext.Cars.AnyAsync())
-                {
-                    var cars = GetCarsToSeed();
-                    await _dbContext.Cars.AddRangeAsync(cars);
-                    await _dbContext.SaveChangesAsync();
-                }
             }
         }
 
@@ -62,25 +55,73 @@ namespace CarAuctionMVC.Application.Seeders
                 {
                     AuctionTittle = "Audi a4!! Bardzo dobry stan!!!",
                     AuctionDate = DateTime.Now,
-                    Price = 56040
+                    Price = 56040,
+                    Car = new Car()
+                    {
+                        Model = "A4",
+                        Brand = "Audi",
+                        CountryOfOrigin = "Niemcy",
+                        DateOfProduction = new DateTime(2018, 01, 01),
+                        Mileage = "190000",
+                        Color = "Czarny",
+                        CarBodyId = 1,
+                        CategoryId = 4,
+                        EngineTypeId = 1
+                    }
                 },
                 new Auction()
                 {
                     AuctionTittle = "Bmw x5!! Promocja",
                     AuctionDate = DateTime.Now,
-                    Price = 90000
+                    Price = 90000,
+                    Car = new Car()
+                    {
+                        Model = "X5",
+                        Brand = "BMW",
+                        CountryOfOrigin = "Niemcy",
+                        DateOfProduction = new DateTime(2015, 10, 15),
+                        Mileage = "200000",
+                        Color = "Biały",
+                        CarBodyId = 3,
+                        CategoryId = 1,
+                        EngineTypeId = 2
+                    }
                 },
                 new Auction()
                 {
                     AuctionTittle = "Najlepszy samochód dostawczy!!! Fiat Ducato!",
                     AuctionDate = DateTime.Now,
-                    Price = 40000
-                },
+                    Price = 40000,
+                    Car =  new Car()
+                        { 
+                            Model = "Ducato", 
+                            Brand = "Fiat",
+                            CountryOfOrigin = "Polska",
+                            DateOfProduction = new DateTime(2006, 07, 30),
+                            Mileage = "500000",
+                            Color = "Biały",
+                            CarBodyId = 5,
+                            CategoryId = 2,
+                            EngineTypeId = 1
+                        },
+                    },
                 new Auction()
                 {
                     AuctionTittle = "Opel astra bardzo dobry samochód osobowy",
                     AuctionDate = DateTime.Now,
-                    Price = 15000
+                    Price = 15000,
+                    Car = new Car()
+                    {
+                        Model = "Astra",
+                        Brand = "Opel",
+                        CountryOfOrigin = "Niemcy",
+                        DateOfProduction = new DateTime(2010, 06, 20),
+                        Mileage = "63000",
+                        Color = "Czerwony",
+                        CarBodyId = 1,
+                        CategoryId = 1,
+                        EngineTypeId = 3
+                    }
                 },
             };
             return auctions;
@@ -123,66 +164,6 @@ namespace CarAuctionMVC.Application.Seeders
 
             return engines;
         }
-
-        private IEnumerable<Car> GetCarsToSeed()
-        {
-            var cars = new List<Car>()
-            {
-                new Car()
-                {
-                    Model = "A4",
-                    Brand = "Audi",
-                    CountryOfOrigin = "Niemcy",
-                    DateOfProduction = new DateTime(2018, 01, 01),
-                    Mileage = "190000",
-                    Color = "Czarny",
-                    AuctionId = 1,
-                    CarBodyId = 1,
-                    CategoryId = 4,
-                    EngineTypeId = 1
-                },
-                new Car()
-                {
-                    Model = "X5",
-                    Brand = "BMW",
-                    CountryOfOrigin = "Niemcy",
-                    DateOfProduction = new DateTime(2015, 10, 15),
-                    Mileage = "200000",
-                    Color = "Biały",
-                    AuctionId = 2,
-                    CarBodyId = 3,
-                    CategoryId = 1,
-                    EngineTypeId = 2
-                },
-                new Car()
-                {
-                    Model = "Ducato",
-                    Brand = "Fiat",
-                    CountryOfOrigin = "Polska",
-                    DateOfProduction = new DateTime(2006, 07, 30),
-                    Mileage = "500000",
-                    Color = "Biały",
-                    AuctionId = 3,
-                    CarBodyId = 5,
-                    CategoryId = 2,
-                    EngineTypeId = 1
-                },
-                new Car()
-                {
-                    Model = "Astra",
-                    Brand = "Opel",
-                    CountryOfOrigin = "Niemcy",
-                    DateOfProduction = new DateTime(2010, 06, 20),
-                    Mileage = "63000",
-                    Color = "Czerwony",
-                    AuctionId = 4,
-                    CarBodyId = 1,
-                    CategoryId = 1,
-                    EngineTypeId = 3
-                }
-            };
-
-            return cars;
         }
     }
 }
