@@ -4,7 +4,7 @@ namespace CarAuctionMVC.Application.Services;
 
 public interface IAuctionService
 {
-    Task<ListOfAuctionDto> GetListOfAuctions();
+    Task<ListOfAuctionDto> GetListOfAuctions(string searchString);
     Task<AuctionDetailsDto> GetAuctionDetailsById(int id);
     Task<NewAuctionDto> GetNewAuctionDtoBeforeCreate();
     Task<NewAuctionDto> GetNewAuctionDtoDtoForEdit(int id);

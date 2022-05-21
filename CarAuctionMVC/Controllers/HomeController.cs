@@ -14,9 +14,9 @@ namespace CarAuctionMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var auctions = await _auctionService.GetListOfAuctions();
+            var auctions = await _auctionService.GetListOfAuctions(searchString);
             return await Task.Run(() => View(auctions));
         }
 

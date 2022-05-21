@@ -17,9 +17,12 @@ namespace CarAuctionMVC.Application.Services
             _logger = logger;
         }
 
-        public async Task<ListOfAuctionDto> GetListOfAuctions()
+        public async Task<ListOfAuctionDto> GetListOfAuctions(string searchString)
         {
-            var auctions = await GetAuctions();
+            if (searchString is null)
+                searchString = string.Empty;
+
+            var auctions = await GetAuctions(searchString);
             var listOfAuctions = new ListOfAuctionDto() { Auctions = auctions };
             return listOfAuctions;
         }
@@ -241,12 +244,14 @@ namespace CarAuctionMVC.Application.Services
                 throw;
             }
         }
-        private async Task<List<AuctionDto>> GetAuctions()
+        private async Task<List<AuctionDto>> GetAuctions(string searchString)
         {
             try
             {
                 var auctions = await _dbContext.Cars
                     .Include(c => c.Auction)
+                    .Where(c => (searchString != "") && c.Auction.AuctionTittle.ToLower().Contains(searchString.ToLower())
+                    || c.Model.ToLower().Contains(searchString.ToLower()) || c.Brand.ToLower().Contains(searchString.ToLower()))
                     .Select(c => new AuctionDto
                     {
                         Id = c.Auction.Id,
