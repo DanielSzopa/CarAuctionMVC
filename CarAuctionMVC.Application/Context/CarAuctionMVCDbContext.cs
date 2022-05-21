@@ -29,7 +29,8 @@ namespace CarAuctionMVC.Application.Context
 
                 a.Property(a => a.AuctionTittle).IsRequired().HasMaxLength(100);
                 a.Property(a => a.AuctionDate).IsRequired();
-                a.Property(a => a.Price).IsRequired();
+                a.Property(a => a.BuyNowPrice).IsRequired();
+                a.Property(a => a.StartAuctionPrice).IsRequired();
             });
 
             modelBuilder.Entity<Car>(c =>

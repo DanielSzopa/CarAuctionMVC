@@ -7,6 +7,6 @@
         public string? Brand { get; set; }
         public string? Model { get; set; }
         public string? ProductionYear { get; set; }
-        public double Price { get; set; }
+        public double BuyNowPrice { get; set; }
     }
 }

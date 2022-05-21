@@ -15,7 +15,7 @@ namespace CarAuctionMVC.Application.Validators
                 .MaximumLength(100).WithMessage("Maksymalna liczba znaków to 20")
                 .NotEmpty().WithMessage("Uzupełnij kraj pochodzenia");
 
-            RuleFor(a => a.Price)
+            RuleFor(a => a.BuyNowPrice)
                 .NotEmpty().WithMessage("Uzupełnij cenę");
 
             RuleFor(a => a.Model)

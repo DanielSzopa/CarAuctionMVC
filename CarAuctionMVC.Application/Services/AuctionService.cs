@@ -44,7 +44,7 @@ namespace CarAuctionMVC.Application.Services
                         Id = a.Id,
                         AuctionTittle = a.AuctionTittle,
                         AuctionDate = a.AuctionDate,
-                        Price = a.Price,
+                        BuyNowPrice = a.BuyNowPrice,
                         Model = a.Car.Model,
                         Brand = a.Car.Brand,
                         CountryOfOrigin = a.Car.CountryOfOrigin,
@@ -88,7 +88,7 @@ namespace CarAuctionMVC.Application.Services
                         Id = a.Id,
                         AuctionTittle = a.AuctionTittle,
                         AuctionDate = a.AuctionDate,
-                        Price = a.Price,
+                        BuyNowPrice = a.BuyNowPrice,
                         Model = a.Car.Model,
                         Brand = a.Car.Brand,
                         CountryOfOrigin = a.Car.CountryOfOrigin,
@@ -141,7 +141,7 @@ namespace CarAuctionMVC.Application.Services
                     throw new Exception("auction is null");
 
                 auction.AuctionTittle = auctionDto.AuctionTittle;
-                auction.Price = auctionDto.Price;
+                auction.BuyNowPrice = auctionDto.BuyNowPrice;
                 auction.Car.Model = auctionDto.Model;
                 auction.Car.Brand = auctionDto.Brand;
                 auction.Car.CountryOfOrigin = auctionDto.CountryOfOrigin;
@@ -186,7 +186,7 @@ namespace CarAuctionMVC.Application.Services
             {
                 AuctionDate = DateTime.Now,
                 AuctionTittle = newAuctionDto.AuctionTittle,
-                Price = newAuctionDto.Price,
+                BuyNowPrice = newAuctionDto.BuyNowPrice,
                 Car = new Car()
                 {
                     Model = newAuctionDto.Model,
@@ -259,7 +259,7 @@ namespace CarAuctionMVC.Application.Services
                         Brand = c.Brand,
                         Model = c.Model,
                         ProductionYear = c.DateOfProduction.Value.Year.ToString(),
-                        Price = c.Auction.Price
+                        BuyNowPrice = c.Auction.BuyNowPrice
                     }).ToListAsync();
 
                 return auctions;

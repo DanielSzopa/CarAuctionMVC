@@ -55,7 +55,8 @@ namespace CarAuctionMVC.Application.Seeders
                 {
                     AuctionTittle = "Audi a4!! Bardzo dobry stan!!!",
                     AuctionDate = DateTime.Now,
-                    Price = 56040,
+                    StartAuctionPrice = 10000,
+                    BuyNowPrice = 56040,
                     Car = new Car()
                     {
                         Model = "A4",
@@ -73,7 +74,8 @@ namespace CarAuctionMVC.Application.Seeders
                 {
                     AuctionTittle = "Bmw x5!! Promocja",
                     AuctionDate = DateTime.Now,
-                    Price = 90000,
+                    StartAuctionPrice = 10000,
+                    BuyNowPrice = 90000,
                     Car = new Car()
                     {
                         Model = "X5",
@@ -91,7 +93,8 @@ namespace CarAuctionMVC.Application.Seeders
                 {
                     AuctionTittle = "Najlepszy samochód dostawczy!!! Fiat Ducato!",
                     AuctionDate = DateTime.Now,
-                    Price = 40000,
+                    StartAuctionPrice = 10000,
+                    BuyNowPrice = 40000,
                     Car =  new Car()
                         { 
                             Model = "Ducato", 
@@ -109,7 +112,8 @@ namespace CarAuctionMVC.Application.Seeders
                 {
                     AuctionTittle = "Opel astra bardzo dobry samochód osobowy",
                     AuctionDate = DateTime.Now,
-                    Price = 15000,
+                    StartAuctionPrice = 10000,
+                    BuyNowPrice = 15000,
                     Car = new Car()
                     {
                         Model = "Astra",
