@@ -8,5 +8,7 @@
         public string? Model { get; set; }
         public string? ProductionYear { get; set; }
         public double BuyNowPrice { get; set; }
+        public double AuctionPrice { get; set; }
+        public double StartAuctionPrice { get; set; }
     }
 }

@@ -34,6 +34,12 @@ namespace CarAuctionMVC.Application.Validators
 
             RuleFor(a => a.Color)
                 .NotEmpty().WithMessage("Uzupełnij kolor");
+
+            RuleFor(a => a.BuyNowPrice)
+                .NotEmpty().WithMessage("Uzupełnij cenę kup teraz");
+
+            RuleFor(a => a.StartAuctionPrice)
+                .NotEmpty().WithMessage("Uzupełnij startową kwotę licytacji");
         }
     }
 }

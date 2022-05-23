@@ -22,10 +22,16 @@
             @Html.DisplayFor(model => model.AuctionDate)
         </dd>
         <dt class = "col-sm-2">
-            Cena (zł)
+            Kup teraz
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuyNowPrice)
+            @Html.DisplayFor(model => model.BuyNowPrice) zł
+        </dd>
+        <dt class = "col-sm-2">
+            Kwota licytacji
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AuctionPrice) zł
         </dd>
         <dt class = "col-sm-2">
             Marka

@@ -45,6 +45,8 @@ namespace CarAuctionMVC.Application.Services
                         AuctionTittle = a.AuctionTittle,
                         AuctionDate = a.AuctionDate,
                         BuyNowPrice = a.BuyNowPrice,
+                        StartAuctionPrice = a.StartAuctionPrice,
+                        AuctionPrice = a.AuctionPrice,
                         Model = a.Car.Model,
                         Brand = a.Car.Brand,
                         CountryOfOrigin = a.Car.CountryOfOrigin,
@@ -56,6 +58,9 @@ namespace CarAuctionMVC.Application.Services
                         EngineName = a.Car.EngineType.EngineName
                     }).FirstOrDefaultAsync();
 
+                auctionDetails.AuctionPrice =
+                    GetAuctionPriceForDetail(auctionDetails.StartAuctionPrice, auctionDetails.AuctionPrice);
+                
                 return auctionDetails;
             }
             catch (Exception e)
@@ -89,6 +94,7 @@ namespace CarAuctionMVC.Application.Services
                         AuctionTittle = a.AuctionTittle,
                         AuctionDate = a.AuctionDate,
                         BuyNowPrice = a.BuyNowPrice,
+                        StartAuctionPrice = a.StartAuctionPrice,
                         Model = a.Car.Model,
                         Brand = a.Car.Brand,
                         CountryOfOrigin = a.Car.CountryOfOrigin,
@@ -142,6 +148,7 @@ namespace CarAuctionMVC.Application.Services
 
                 auction.AuctionTittle = auctionDto.AuctionTittle;
                 auction.BuyNowPrice = auctionDto.BuyNowPrice;
+                auction.StartAuctionPrice = auctionDto.StartAuctionPrice;
                 auction.Car.Model = auctionDto.Model;
                 auction.Car.Brand = auctionDto.Brand;
                 auction.Car.CountryOfOrigin = auctionDto.CountryOfOrigin;
@@ -180,6 +187,13 @@ namespace CarAuctionMVC.Application.Services
             }
         }
 
+        private double GetAuctionPriceForDetail(double startPrice, double auctionPrice)
+        {
+            if (auctionPrice >= startPrice)
+                return auctionPrice;
+            else
+                return startPrice;
+        }
         private Auction MapNewAuctionDtoToAuctionEntity(NewAuctionDto newAuctionDto)
         {
             var auction = new Auction()
@@ -187,6 +201,7 @@ namespace CarAuctionMVC.Application.Services
                 AuctionDate = DateTime.Now,
                 AuctionTittle = newAuctionDto.AuctionTittle,
                 BuyNowPrice = newAuctionDto.BuyNowPrice,
+                StartAuctionPrice = newAuctionDto.StartAuctionPrice,
                 Car = new Car()
                 {
                     Model = newAuctionDto.Model,
@@ -259,8 +274,16 @@ namespace CarAuctionMVC.Application.Services
                         Brand = c.Brand,
                         Model = c.Model,
                         ProductionYear = c.DateOfProduction.Value.Year.ToString(),
-                        BuyNowPrice = c.Auction.BuyNowPrice
+                        BuyNowPrice = c.Auction.BuyNowPrice,
+                        StartAuctionPrice = c.Auction.StartAuctionPrice,
+                        AuctionPrice = c.Auction.AuctionPrice,
                     }).ToListAsync();
+
+                foreach (var auctionDto in auctions)
+                {
+                    auctionDto.AuctionPrice =
+                        GetAuctionPriceForDetail(auctionDto.StartAuctionPrice, auctionDto.AuctionPrice);
+                }
 
                 return auctions;
             }
