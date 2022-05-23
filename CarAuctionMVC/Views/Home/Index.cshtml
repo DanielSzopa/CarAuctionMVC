@@ -70,8 +70,9 @@
                 @Html.DisplayFor(modelItem => item.AuctionPrice) zł
             </td>
             <td>
-                <a class="btn btn-secondary" asp-route-id="@item.Id" asp-action="Edit">Edytuj</a>
+                <a class="btn btn-success" asp-action="BuyNow" asp-route-id="@item.Id">Kup teraz</a>
                 <a class="btn btn-secondary" asp-route-id="@item.Id" asp-action="Details">Szczegóły</a>
+                <a class="btn btn-secondary" asp-route-id="@item.Id" asp-action="Edit">Edytuj</a>
                 <a class="btn btn-secondary" asp-route-id="@item.Id" asp-action="Delete">Usuń</a>
             </td>
         </tr>

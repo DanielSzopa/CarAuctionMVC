@@ -56,6 +56,13 @@ namespace CarAuctionMVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> BuyNow(int id)
+        {
+            await _auctionService.DeleteAuction(id);
+            return await Task.Run(() => RedirectToAction("Index"));
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var auctionDetails = await _auctionService.GetAuctionDetailsById(id);
