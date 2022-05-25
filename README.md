@@ -5,6 +5,7 @@
 * [Informacje](#informacje)
 * [Technologie](#technologie)
 * [Funkcje aplikacji](#funkcje-aplikacji)
+* [Zdjęcia](#zdjęcia)
 
 ## Informacje
 Aplikacja zawiera wykorzystane zagadnienia zaliczeniowe podane przez prowadzącego ćwiczenia:
@@ -35,6 +36,17 @@ Aplikacja zawiera wykorzystane zagadnienia zaliczeniowe podane przez prowadzące
 * Usuwanie aukcji
 * Kupowanie aukcji bez licytacji
 * Licytacja aukcji
+
+
+## Zdjęcia
+### Aukcje
+![Aukcje](/CarAuctionMVC/wwwroot/img/Auctions.png)
+### Szczegóły aukcji
+![Szczegóły aukcji](/CarAuctionMVC/wwwroot/img/DetailsAuction.png)
+### Tworzenie aukcji
+![Tworzenie aukcji](/CarAuctionMVC/wwwroot/img/CreateAuction.png)
+### Edytowanie aukcji
+![Edytowanie aukcji](/CarAuctionMVC/wwwroot/img/EditAuction.png)
 
 
 
