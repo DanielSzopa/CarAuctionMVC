@@ -187,6 +187,28 @@ namespace CarAuctionMVC.Application.Services
             }
         }
 
+        public async Task BidAuction(int id, double bidPrice)
+        {
+            var oldPrices = await _dbContext.Auctions.Where(a => a.Id == id)
+                .Select(a => new
+                {
+                    StartAuctionPrice = a.StartAuctionPrice,
+                    AuctionPrice = a.AuctionPrice
+                })
+                .FirstOrDefaultAsync();
+
+            double oldPrice = GetAuctionPriceForDetail(oldPrices.StartAuctionPrice, oldPrices.AuctionPrice);
+
+            if (oldPrice < bidPrice)
+            {
+                var auction = await _dbContext.Auctions
+                    .FirstOrDefaultAsync(a => a.Id == id);
+
+                auction.AuctionPrice = bidPrice;
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
         private double GetAuctionPriceForDetail(double startPrice, double auctionPrice)
         {
             if (auctionPrice >= startPrice)

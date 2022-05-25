@@ -76,10 +76,10 @@
             @Html.DisplayFor(model => model.DateOfProduction)
         </dd>
         <dt class = "col-sm-2">
-            Przebieg (km)
+            Przebieg
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Mileage)
+            @Html.DisplayFor(model => model.Mileage) km
         </dd>
         <dt class = "col-sm-2">
             Kolor
@@ -90,8 +90,21 @@
     </dl>
 </div>
 <div>
+    @{
+        var bidPrice = Model.AuctionPrice + 100;
+    }
+    <form class="form-inline" asp-controller="Home" asp-action="Bid" method="post">
+        <div>
+            <input class="form-control w-25 d-inline" type="number" placeholder="Licytuj" aria-label="bid" name="auctionPrice" id="auctionPrice" asp-for="@bidPrice">
+            <input type="hidden" asp-for="Id"/>
+            <button class="btn btn-success d-inline" type="submit">Licytuj</button>
+        </div>
+    </form>
+</div>
+<p></p>
+<div>
     <a class="btn btn-success" asp-action="BuyNow" asp-route-id="@Model.Id">Kup teraz</a>
     <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
     <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@Model.Id">Usuń</a>
-    <a style="margin-left: 100px" class="btn btn-secondary" asp-action="Index">Cofnij</a>
+    <a style="margin-left:90px" class="btn btn-secondary" asp-action="Index">Cofnij</a>
 </div>

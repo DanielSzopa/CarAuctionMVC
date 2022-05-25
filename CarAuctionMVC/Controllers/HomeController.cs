@@ -48,6 +48,13 @@ namespace CarAuctionMVC.Controllers
             return await Task.Run(() => RedirectToAction("Details", new { id = auctionId }));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Bid(int id, double auctionPrice)
+        {
+            await _auctionService.BidAuction(id, auctionPrice);
+            return await Task.Run(() => RedirectToAction("Details", new { id = id }));
+        }
+
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

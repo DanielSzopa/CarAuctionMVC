@@ -11,4 +11,5 @@ public interface IAuctionService
     Task<int> CreateNewAuction(NewAuctionDto auctionDto);
     Task<int> EditAuction(NewAuctionDto auctionDto);
     Task DeleteAuction(int id);
+    Task BidAuction(int id, double bidPrice);
 }
